@@ -34,6 +34,8 @@ class ClienteViewSchema(BaseModel):
 
 
 class ConsultaClienteSchema(BaseModel):
+    """Define o parametro para consultar o cliente no banco
+    """
     cpf: str = "301.119.140-94"
 
     @validator('cpf')
@@ -47,6 +49,8 @@ class ConsultaClienteSchema(BaseModel):
         return cpf
 
 class EnderecoSchema(BaseModel):
+    """ Schema base do endereço
+    """
     rua: str
     numero: str
     bairro: str
@@ -55,12 +59,14 @@ class EnderecoSchema(BaseModel):
     cep: str
 
 class ClienteCompletoSchema(BaseModel):
+    """ Representação completa de como o cliente é retornado da base
+    """
     id: int = 1
     nome: str = "allison tomé"
     cpf: str = "301.119.140-94"
     telefone: str = "81985693265"
     endereco_completo: str
-    endereco: EnderecoSchema
+    endereco_split: EnderecoSchema
     corretor: CorretorViewSchema
 
 class ClienteIdSchema(BaseModel):

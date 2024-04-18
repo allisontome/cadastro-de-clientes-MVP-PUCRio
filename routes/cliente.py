@@ -18,7 +18,7 @@ cliente_tag = Tag(name="Cliente", description="Consultar, incluir, alterar e del
     "409": ErrorSchema
 })
 def post_cliente(form: ClienteSchema):
-    """ Cadastro de cliente
+    """ Cadastra um novo cliente no banco de dados
     """
     logging.debug(form.nome)
 
@@ -57,7 +57,7 @@ def post_cliente(form: ClienteSchema):
     "404": ErrorSchema
 })
 def get_cliente(query: ConsultaClienteSchema):
-    """ Consulta cliente pelo cpf
+    """ Consulta cliente cadastrado no banco pelo cpf
     """
     try:
         session = Session()
