@@ -87,18 +87,16 @@ def delete_corretor(form: ConsultaCorretorSchema):
     finally:
         session.close()
 
-@app.get("/corretores", tags=[corretor_tag])
-def get_all_corretores():
+@app.get("/corretores", tags=[corretor_tag], responses= {
+    "200": ListaCorretoresSchema,
+    "400": ErrorSchema
+})
+def get_all_corretor():
+    """ Retorna todos os corretores cadastrados no banco
+    """
     try:
         session = Session()
         corretores = session.query(Corretor).all()
-        corretores_list = []
-        for corretor in corretores:
-            corretores_list.append({
-                "id": corretor.id,
-                "nome": corretor.nome,
-                "cpf": corretor.cpf
-            })
-        return {"corretores": corretores_list}, 200
+        return {"corretores": lista_corretores(corretores)}, 200
     except Exception as e:
-        return {"message": "erro ao buscar corretores"}, 400
+        return {"message": "Erro ao buscar corretores"}, 400

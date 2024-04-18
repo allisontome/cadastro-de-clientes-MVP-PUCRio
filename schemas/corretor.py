@@ -1,4 +1,5 @@
-from pydantic import BaseModel, validator, Field
+from pydantic import BaseModel, validator
+from typing import List
 from helpers.helper import valida_cpf, format_cpf
 
 
@@ -27,6 +28,9 @@ class CorretorViewSchema(BaseModel):
     cpf: str = "301.119.140-94"
     telefone: str = "81988552233"
 
+class ListaCorretoresSchema(BaseModel):
+    corretores: List[CorretorViewSchema]
+
 
 class ConsultaCorretorSchema(BaseModel):
     id: int = 1
@@ -52,3 +56,6 @@ def apresenta_corretor(corretor):
         "cpf": cpf_formatado,
         "telefone": corretor.telefone
     }
+
+def lista_corretores(corretores):
+    return [{"id": corretor.id, "nome": corretor.nome, "cpf": corretor.cpf, "telefone": corretor.telefone} for corretor in corretores]
