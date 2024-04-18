@@ -86,3 +86,19 @@ def delete_corretor(form: ConsultaCorretorSchema):
         return {"message": "não foi possível exlcuir o corretor"}, 400
     finally:
         session.close()
+
+@app.get("/corretores", tags=[corretor_tag])
+def get_all_corretores():
+    try:
+        session = Session()
+        corretores = session.query(Corretor).all()
+        corretores_list = []
+        for corretor in corretores:
+            corretores_list.append({
+                "id": corretor.id,
+                "nome": corretor.nome,
+                "cpf": corretor.cpf
+            })
+        return {"corretores": corretores_list}, 200
+    except Exception as e:
+        return {"message": "erro ao buscar corretores"}, 400
